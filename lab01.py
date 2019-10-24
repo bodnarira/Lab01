@@ -8,4 +8,6 @@ def main(x):
         print(randnums, '; ')
     print('sum =', sum)
     print('avg = ', sum/x)
-main(5)
+
+if __name__ == "__main__":
+	main(5)
