@@ -33,5 +33,6 @@ class Dir:
 
         return result
 
-dir = Dir("D:/Ira/Python/new/")
-print(dir.duplicates())
+if __name__ == '__main__':
+    dir = Dir("D:/Ira/Python/new/")
+    print(dir.duplicates())
