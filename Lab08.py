@@ -1,10 +1,8 @@
 import os
 
 class Dir:
-    def __init__ (self, path):
-        self.path = path
-    def duplicates (self):
-        list_of_files = os.listdir(self.path)
+    def duplicates (path:str):
+        list_of_files = os.listdir(path)
         i = 0
         result = []
         for i in range(len(list_of_files)):
@@ -34,5 +32,5 @@ class Dir:
         return result
 
 if __name__ == '__main__':
-    dir = Dir("D:/Ira/Python/new/")
+    dir = Dir("../../Python/new/")
     print(dir.duplicates())
