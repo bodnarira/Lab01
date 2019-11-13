@@ -32,5 +32,4 @@ class Dir:
         return result
 
 if __name__ == '__main__':
-    dir = Dir("../../Python/new/")
-    print(dir.duplicates())
+    print(Dir.duplicates())
