@@ -11,4 +11,4 @@ class Monkey(Animal):
         return 2
 
 def GetLegs (animal: Animal):
-    car.legs()
+    animal.legs()
