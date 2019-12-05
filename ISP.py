@@ -1,8 +1,21 @@
-class Phone():
-    def update_iphone():
-        pass
-    def update_android():
-        pass
+#class Phone():
+#    def update_iphone():
+#        pass
+#    def update_android():
+#        pass
+
+#class Iphone(Phone):
+#    def update_iphone():
+#        print("Updated to 13v.")
+#    def update_android():
+#       # ??? Iphone hasnt got android os
+
+#class Android(Phone):
+#    def update_iphone():
+#        # ??? Android hasnt got ios
+#    def update_android():
+#        print("Updated to 9.1v.")
+
 
 class IIphone:
     def update_iphone(self):
