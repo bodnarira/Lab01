@@ -1,3 +1,4 @@
+import re
 import urllib.request
 
 class File:
@@ -8,10 +9,16 @@ class File:
 class Counter:
   def __init__ (self, file:File):
     self.file = file
-  def WordCount (self, word):
-    return len(self.file.data.split(word))-1
+  def WordsCount (self):
+    data = self.file.data.replace("\'", "").lower()
+    words = re.findall('\w+', data)
+    res = {}
+    for i in words:
+      try: res[i] += 1
+      except: res[i] = 1
+    return res
 
 if __name__ == "__main__":
   f = File("https://www.w3.org/TR/PNG/iso_8859-1.txt")
   counter = Counter(f)
-  print(counter.WordCount("VULGAR"))  
+  print(counter.WordsCount())
