@@ -1,28 +1,34 @@
-from threading import Thread
-import urllib.request
-import time
+from urllib.request import *
+import threading
 
-class FileByUrl(Thread):
-    def __init__ (self, name:str, url:str):
-        Thread.__init__(self)
-        self.url = url
-        self.name = name
+def download_file (file:str, name:str, n:int):
+    file_info = urlopen(Request(file)).info()
+    size = int(file_info['Content-Length'])
+    new_file = open(name, "w")
+    new_file.write("\0"*size)
+    new_file.close()
+    parts = [0]
+    for i in range(n-1): parts.append(parts[len(parts)-1]+int(size/n))
+    parts.append(parts[len(parts)-1]+size-int(size/n)*(n-1))
+    threades = []
+    for i in range(1, len(parts)):
+        thread = threading.Thread(target=get_part, args=[file, name, parts[i-1], parts[i]])
+        thread.start()
+        threades.append(thread)
 
-    def download (self):
-        print(str(self.name)+" is downloading.")
-        urllib.request.urlretrieve(self.url, self.name)
-        print(str(self.name)+" downloaded")
+    for t in threades:
+        t.join()
 
-    def run (self):
-        self.download()
+    print("Done.")
 
-if __name__ == '__main__':
-    files = [FileByUrl("first.jpg", "https://image.freepik.com/free-photo/wall-wallpaper-concrete-colored-painted-textured-concept_53876-31799.jpg"), 
-             FileByUrl("second.jpg", "https://thumb9.shutterstock.com/thumb_large/2121473/293983418/stock-photo-paper-texture-background-293983418.jpg"),
-             FileByUrl("third.jpg", "https://img.freepik.com/free-photo/dawn-hwangmasan-mountain-with-sea-clouds_127212-6.jpg?size=626&ext=jpg")]
+def get_part (file:str, name:str, start:int, end:int):
+    request = Request(file)
+    request.add_header('Range', 'bytes='+str(start)+'-'+str(end))
+    res = urlopen(request).read()
+    new_file = open(name, "rb+")
+    new_file.seek(start,0)
+    new_file.write(bytearray(res))
+    new_file.close()
 
-    for file in files:
-        file.start()
-
-    for file in files:
-        file.join()
+if __name__ == "__main__":
+    download_file("https://static.addtoany.com/images/dracaena-cinnabari.jpg", "yee.jpg", 10)
