@@ -43,3 +43,19 @@ class RWLock:
             yield
         finally:
             self.w_release()
+            
+
+class Level:
+    def __init__ (self):
+        self.rwlock = RWLock()
+        
+    def load (self):
+        with self.rwlock.r_locked():
+            # level is reading from the file
+            pass
+        
+    def save (self):
+        with self.rwlock.w_locked():
+            # level is writing to the file
+            pass
+        
